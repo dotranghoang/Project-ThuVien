@@ -1,5 +1,7 @@
 package com.codegym.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -13,6 +15,7 @@ public class Publisher {
     private String publisher;
 
 
+    @JsonIgnore
     @OneToMany(targetEntity = Book.class)
     private List<Book> books;
 

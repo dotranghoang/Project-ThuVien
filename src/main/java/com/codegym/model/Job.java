@@ -12,7 +12,7 @@ public class Job {
 
     private String job;
 
-    @OneToMany(targetEntity = Customer.class)
+    @OneToMany(targetEntity = Customer.class,fetch = FetchType.EAGER)
     private List<Customer> customers;
 
     public Job() {

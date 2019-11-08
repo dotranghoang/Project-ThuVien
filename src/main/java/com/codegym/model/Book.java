@@ -11,9 +11,30 @@ public class Book {
 
     private String book;
     private String author;
+    private String image;
     private Long categoryId;
     private Long publisherId;
     private Long statusId;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Book(String book, String author, String image, Long categoryId, Long publisherId, Long statusId, Category category, Publisher publisher, Status status) {
+        this.book = book;
+        this.author = author;
+        this.image = image;
+        this.categoryId = categoryId;
+        this.publisherId = publisherId;
+        this.statusId = statusId;
+        this.category = category;
+        this.publisher = publisher;
+        this.status = status;
+    }
 
     public Long getCategoryId() {
         return categoryId;

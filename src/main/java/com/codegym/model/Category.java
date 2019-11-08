@@ -12,7 +12,7 @@ public class Category {
 
     private String category;
 
-    @OneToMany(targetEntity = Book.class)
+    @OneToMany(targetEntity = Book.class,fetch = FetchType.EAGER)
     private List<Book> books;
 
     public Category(String category, List<Book> books) {

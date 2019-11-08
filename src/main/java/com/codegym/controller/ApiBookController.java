@@ -2,22 +2,33 @@ package com.codegym.controller;
 
 import com.codegym.model.Book;
 import com.codegym.model.Category;
+import com.codegym.model.Publisher;
+import com.codegym.model.Status;
 import com.codegym.service.BookService;
+import com.codegym.service.CategoryService;
+import com.codegym.service.PublisherService;
+import com.codegym.service.StatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "*")
 @RestController
 public class ApiBookController {
 
     @Autowired
     private BookService bookService;
+
+    @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
+    private StatusService statusService;
+
+    @Autowired
+    private PublisherService publisherService;
 
     @GetMapping("/api/book")
     public ResponseEntity<List<Book>> getBookList(){
@@ -39,6 +50,20 @@ public class ApiBookController {
         }
 
         return new ResponseEntity<>(book,HttpStatus.OK);
+    }
+
+    @PostMapping("/api/book")
+    public ResponseEntity<Book> createBook(@RequestBody Book book) {
+        Status status = statusService.findById(book.getStatusId());
+        Category category = categoryService.findById(book.getCategoryId());
+        Publisher publisher = publisherService.findById(book.getPublisherId());
+
+        book.setStatus(status);
+        book.setCategory(category);
+        book.setPublisher(publisher);
+        bookService.save(book);
+
+        return new ResponseEntity<>(book,HttpStatus.CREATED);
     }
 
     @DeleteMapping("/api/book/{id}")
